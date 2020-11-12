@@ -1,0 +1,56 @@
+{
+  "settings": {
+    "react": {
+      "version": "detect",
+      "flowVersion": "0.129.0"
+    }
+  },
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "extends": [
+        "airbnb",
+        "prettier",
+        "prettier/react",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:flowtype/recommended",
+        "prettier/flowtype"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "prettier", 
+        "flowtype"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true
+        }
+      ],
+      "react/jsx-no-bind": [
+        "error",
+        {
+          "allowArrowFunctions": false,
+          "allowFunctions": false,
+          "allowBind": false
+        }
+      ],
+      "no-console": 0,
+      "react/default-props-match-prop-types": 0,
+      "prefer-promise-reject-errors": 0,
+      "no-underscore-dangle": 0,
+      "react/forbid-prop-types": 0,
+      "react/static-property-placement": 0,
+      "import/no-cycle": 0
+    }
+}
