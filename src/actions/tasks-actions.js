@@ -1,5 +1,6 @@
 // @flow
-import { TASKS_TYPES, Task, ACTION } from '../constants';
+import { TASKS_TYPES, ACTION } from '../constants';
+import type { Task } from '../constants/types';
 
 const {
   ADD_NEW_TASK,

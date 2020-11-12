@@ -1,5 +1,6 @@
 // @flow
-import { TASKS_TYPES, ACTION, Task } from '../constants';
+import { TASKS_TYPES, ACTION } from '../constants';
+import type { Task, Category } from '../constants/types';
 
 const {
   ADD_NEW_TASK,
@@ -11,17 +12,22 @@ const {
 
 type State = {
   tasks: ?Array<Task>,
+  categories: Array<Category>,
 };
 
 const STATE: State = {
   tasks: [],
+  categories: [
+    { title: 'Work', color: 'blue' },
+    { title: 'Personal', color: 'green' },
+  ],
 };
 
 const onAddNewTask = (state: Object, action: Object) => {
   const { task }: { task: Task } = action.payload;
   const { tasks } = state;
 
-  console.log(task, tasks);
+  return { ...state, tasks: [...tasks, task] };
 };
 
 const editTask = (state: Object, action: Object) => {
