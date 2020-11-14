@@ -1,21 +1,28 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
+import moment from 'moment';
 import {
   getIsTaskListEmpty,
   getCompletedTasks,
   getUncompletedTasks,
+  getAllTasks,
 } from '../selectors/tasks-selectors';
-import { Task } from '../constants';
+import type { Task } from '../constants/types';
 import TaskBar from './common/TaskBar';
 import TaskList from './common/TaskList';
+import TaskViewBar from './common/TaskViewBar';
+
+type ViewType = 'all' | 'completed' | 'pending';
 
 type State = {
-  viewType: 0 | 1,
+  viewType: ViewType,
 };
 
 type Props = {
-  isTaskListEmpty: ?Array<Task>,
+  isTaskListEmpty: boolean,
+  allTasks: Array<Task>,
   completedTasks: Array<Task>,
   uncompletedTasks: Array<Task>,
 };
@@ -25,24 +32,53 @@ class Layout extends Component<Props, State> {
     super(props);
 
     this.state = {
-      viewType: 0,
+      viewType: 'all',
     };
   }
 
   renderTaskList = () => {
-    const { isTaskListEmpty, completedTasks, uncompletedTasks } = this.props;
+    const {
+      isTaskListEmpty,
+      completedTasks,
+      uncompletedTasks,
+      allTasks,
+    } = this.props;
     const { viewType } = this.state;
 
-    if (isTaskListEmpty) return <h1>No tasks</h1>;
-    if (viewType === 0) return <TaskList tasks={uncompletedTasks} />;
-    return <TaskList tasks={completedTasks} />;
+    if (isTaskListEmpty)
+      return (
+        <>
+          <h1>No pending tasks for today.</h1>
+          <p>Take a moment for yourself</p>
+        </>
+      );
+    if (viewType === 'all') return <TaskList type="all" tasks={allTasks} />;
+    if (viewType === 'completed')
+      return <TaskList type="completed" tasks={completedTasks} />;
+    return <TaskList type="pending" tasks={uncompletedTasks} />;
+  };
+
+  setTypeView = (viewType: ViewType) => {
+    this.setState({ viewType });
   };
 
   render() {
+    const { isTaskListEmpty } = this.props;
+
     return (
       <section id="layout">
-        <TaskBar />
-        {this.renderTaskList()}
+        <p className="current-date">{moment().format('MMMM Do YYYY')}</p>
+        <div className="task-manager">
+          <TaskBar />
+        </div>
+        <div
+          className={classNames('task-list', { 'no-tasks': isTaskListEmpty })}
+        >
+          {!isTaskListEmpty ? (
+            <TaskViewBar setTypeView={this.setTypeView} />
+          ) : null}
+          {this.renderTaskList()}
+        </div>
       </section>
     );
   }
@@ -50,6 +86,7 @@ class Layout extends Component<Props, State> {
 
 const mapStateToProps = ({ tasks }: Object) => ({
   isTaskListEmpty: getIsTaskListEmpty(tasks),
+  allTasks: getAllTasks(tasks),
   completedTasks: getCompletedTasks(tasks),
   uncompletedTasks: getUncompletedTasks(tasks),
 });

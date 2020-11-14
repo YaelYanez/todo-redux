@@ -1,4 +1,5 @@
 // @flow
+import moment from 'moment';
 import { TASKS_TYPES, ACTION } from '../constants';
 import type { Task, Category } from '../constants/types';
 
@@ -18,8 +19,11 @@ type State = {
 const STATE: State = {
   tasks: [],
   categories: [
-    { title: 'Work', color: 'blue' },
-    { title: 'Personal', color: 'green' },
+    { title: 'Work', color: '#007bff' },
+    { title: 'Personal', color: '#ff2d54' },
+    { title: 'Friends', color: '#34c759' },
+    { title: 'Shop List', color: '#ff9500' },
+    { title: 'No List', color: '#8e8e93' },
   ],
 };
 
@@ -35,26 +39,55 @@ const editTask = (state: Object, action: Object) => {
     taskId,
     newTitle,
   }: { taskId: string, newTitle: string } = action.payload;
+  const { tasks } = state;
 
-  console.log(taskId, newTitle);
+  const newTasks = tasks.map((task) => {
+    if (task.id === taskId) return { ...task, title: newTitle };
+    return task;
+  });
+
+  return { ...state, tasks: newTasks };
 };
 
 const completeTask = (state: Object, action: Object) => {
   const { taskId }: { taskId: string } = action.payload;
+  const { tasks } = state;
 
-  console.log(taskId);
+  const newTasks = tasks.map((task) => {
+    if (task.id === taskId)
+      return {
+        ...task,
+        isCompleted: true,
+        endedDate: moment().format('MMMM Do YYYY'),
+      };
+    return task;
+  });
+
+  return { ...state, tasks: newTasks };
 };
 
 const undoCompleteTask = (state: Object, action: Object) => {
   const { taskId }: { taskId: string } = action.payload;
+  const { tasks } = state;
 
-  console.log(taskId);
+  const newTasks = tasks.map((task) => {
+    if (task.id === taskId) return { ...task, isCompleted: false };
+    return task;
+  });
+
+  return { ...state, tasks: newTasks };
 };
 
 const discartTask = (state: Object, action: Object) => {
   const { taskId }: { taskId: string } = action.payload;
+  const { tasks } = state;
 
-  console.log(taskId);
+  const newTasks = tasks.map((task) => {
+    if (task.id === taskId) return { ...task, isCancelled: true };
+    return task;
+  });
+
+  return { ...state, tasks: newTasks };
 };
 
 const actionMap = {

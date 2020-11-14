@@ -24,3 +24,25 @@
 }
 
 $raleway: 'Raleway';
+$raleway-light: 'Raleway-Light';
+$raleway-Medium: 'Raleway-Medium';
+$raleway-Bold: 'Raleway-Bold';
+$raleway-SemiBold: 'Raleway-SemiBold';
+
+$black: #000000;
+$white: #ffffff;
+$grey: #f5f6f8;
+$contrast-grey: #f5f6f8;
+$contrast-blue: #019bfd;
+
+$box-shadow: 0 4px 60px 0px
+  rgba(
+    $color: $black,
+    $alpha: 0.05,
+  );
+
+$box-shadow-2: 0 4px 15px 0px
+  rgba(
+    $color: $black,
+    $alpha: 0.05,
+  );

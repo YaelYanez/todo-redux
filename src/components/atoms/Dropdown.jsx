@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import classNames from 'classnames';
 import type { Category } from '../../constants/types';
+import { Arrow } from '../../icons';
 
 type Props = {
   options: Array<Category>,
@@ -11,6 +13,7 @@ type Props = {
 
 type State = {
   selectedOption: Object,
+  optionsVisibilty: boolean,
 };
 
 class Dropdown extends Component<Props, State> {
@@ -19,6 +22,7 @@ class Dropdown extends Component<Props, State> {
 
     this.state = {
       selectedOption: {},
+      optionsVisibilty: false,
     };
   }
 
@@ -27,37 +31,63 @@ class Dropdown extends Component<Props, State> {
     this.setState({ selectedOption: defaultValue });
   }
 
-  onSelectCategory = ({ currentTarget }: SyntheticEvent<HTMLButtonElement>) => {
+  onSelectOption = ({ currentTarget }: SyntheticEvent<HTMLButtonElement>) => {
     const { id } = currentTarget;
     const { options, onChangeOption } = this.props;
     const { selectedOption } = this.state;
     const newSelectedOption =
       options.find(({ title }) => title === id) || selectedOption;
 
-    this.setState({ selectedOption: newSelectedOption });
+    this.setState({
+      selectedOption: newSelectedOption,
+      optionsVisibilty: false,
+    });
 
-    onChangeOption(selectedOption);
+    onChangeOption(newSelectedOption);
+  };
+
+  handleOptionVisibility = () => {
+    const { optionsVisibilty } = this.state;
+
+    this.setState({ optionsVisibilty: !optionsVisibilty });
   };
 
   render() {
     const { options } = this.props;
-    const { selectedOption } = this.state;
+    const { selectedOption, optionsVisibilty } = this.state;
 
     return (
-      <div id="dropdown">
-        <p>{selectedOption.title}</p>
-        <p>{selectedOption.color}</p>
+      <div className="dropdown">
+        <div
+          className={classNames('dropdown-selected-option', {
+            'is-expanded': optionsVisibilty,
+          })}
+          onClick={this.handleOptionVisibility}
+          role="presentation"
+        >
+          <p className="dropdown-option">
+            <span style={{ borderColor: selectedOption.color }} />
+            {selectedOption.title}
+          </p>
+          <Arrow />
+        </div>
 
-        <div className="dropdown-options">
+        <div
+          className={classNames('dropdown-options', {
+            'is-expanded': optionsVisibilty,
+          })}
+        >
           {options.map(({ title, color }) => (
             <div
               key={uuidv4()}
               id={title}
-              onClick={this.onSelectCategory}
+              onClick={this.onSelectOption}
               role="presentation"
             >
-              <p>{title}</p>
-              <p>{color}</p>
+              <p className="dropdown-option">
+                <span style={{ borderColor: color }} />
+                {title}
+              </p>
             </div>
           ))}
         </div>

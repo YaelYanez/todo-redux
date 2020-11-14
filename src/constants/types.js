@@ -12,5 +12,5 @@ export type Task = {|
   creationDate: string,
   endedDate: string,
   isCompleted: boolean,
-  isCanceled: boolean,
+  isCancelled: boolean,
 |};

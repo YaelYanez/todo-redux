@@ -1,0 +1,189 @@
+.task-card {
+  position: relative;
+  background: $white;
+  box-shadow: $box-shadow-2;
+  padding: 15px 20px;
+  border-radius: 13px;
+  border-color: rgba($color: $black, $alpha: 0.03);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+
+  .category-indicator {
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    border-radius: 13px 0 0 13px;
+    left: 0;
+    top: 0;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    max-width: max-content;
+    min-width: min-content;
+    position: relative;
+    animation-name: example;
+    animation-duration: 3s;
+
+    @keyframes example {
+      from {
+        pointer-events: none;
+      }
+      to {
+        pointer-events: initial;
+      }
+    }
+
+    .checkbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 15px;
+      height: 15px;
+      background: darken($color: $contrast-grey, $amount: 10);
+      margin-right: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s background-color ease-in-out;
+
+      svg {
+        width: 10px;
+        opacity: 0;
+        transition: 0.3s opacity ease-in-out;
+      }
+
+      &:hover {
+        background: darken($color: $contrast-grey, $amount: 60);
+
+        + .strike-line {
+          width: calc(100% - 15px);
+        }
+
+        ~ .task-title {
+          color: rgba($color: $black, $alpha: 0.4);
+        }
+      }
+    }
+
+    .strike-line {
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      background: darken($color: $contrast-grey, $amount: 60);
+      border-radius: 20px;
+      transition: 0.3s width ease-in-out;
+    }
+
+    .task-title {
+      position: relative;
+      display: inline;
+      transition: 0.3s color ease-in-out;
+      outline: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        width: 0;
+        height: 1px;
+        background-color: $contrast-blue;
+        transition: 0.3s width ease-in-out;
+      }
+
+      &:focus {
+        &::before {
+          width: calc(100% + 10px);
+        }
+      }
+    }
+
+    &.is-checked {
+      .checkbox {
+        background: darken($color: $contrast-grey, $amount: 60);
+
+        svg {
+          opacity: 1;
+        }
+
+        &:hover {
+          background: darken($color: $contrast-grey, $amount: 10);
+
+          + .strike-line {
+            width: 0%;
+          }
+
+          ~ .task-title {
+            color: $black;
+          }
+        }
+      }
+
+      .strike-line {
+        width: calc(100% - 15px);
+      }
+
+      .task-title {
+        color: rgba($color: $black, $alpha: 0.4);
+      }
+    }
+  }
+
+  &-actions {
+    position: relative;
+
+    .task-icon-button {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 8px;
+
+      &:hover {
+        background-color: rgba($color: $black, $alpha: 0.03);
+      }
+    }
+
+    .task-options-list {
+      position: absolute;
+      bottom: 0;
+      right: 10px;
+      z-index: 5;
+      transform: translateY(100%);
+      background-color: $white;
+      box-shadow: $box-shadow-2;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+
+      p {
+        font-size: 14px;
+        padding: 15px 20px;
+        cursor: pointer;
+        transition: 0.3s background-color ease-in-out;
+        display: flex;
+        align-items: center;
+
+        svg {
+          width: 12px;
+          margin-right: 10px;
+        }
+
+        &:hover {
+          background-color: darken($color: $white, $amount: 10);
+        }
+      }
+
+      &.is-expanded {
+        display: block;
+      }
+    }
+  }
+}

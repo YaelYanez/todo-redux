@@ -1,2 +1,8 @@
-@import './theme.scss';
-@import './reseter.scss';
+@import './theme';
+@import './reseter';
+@import './components/layout';
+@import './components/common/taskbar';
+@import './components/common/tasklist';
+@import './components/common/taskviewbar';
+@import './components/atoms/dropdown';
+@import './components/atoms/taskcard';

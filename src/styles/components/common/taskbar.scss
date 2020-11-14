@@ -1,0 +1,40 @@
+.taskbar {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.7fr 0.3fr;
+  align-items: center;
+  width: 80%;
+  border: 1px solid;
+  border-color: rgba($color: $black, $alpha: 0.03);
+  border-radius: 13px;
+  padding: 5px 5px 5px 15px;
+  box-shadow: $box-shadow;
+
+  &-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .placeholded-task {
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      background-color: $grey;
+      border-radius: 3px;
+      transition: 0.2s background-color ease-in-out;
+    }
+
+    input {
+      width: 100%;
+      outline: none;
+      border: none;
+      min-height: 40px;
+      font-size: 15px;
+
+      &::placeholder {
+        font-size: 15px;
+        color: rgba($color: $black, $alpha: 0.5);
+      }
+    }
+  }
+}

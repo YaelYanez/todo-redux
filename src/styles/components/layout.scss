@@ -1,0 +1,47 @@
+#layout {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0.3fr 1.7fr;
+
+  .current-date {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 30px;
+    font-family: $raleway-SemiBold;
+    color: $contrast-blue;
+  }
+
+  .task-manager {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .task-list {
+    &.no-tasks {
+      width: 80%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      h1 {
+        width: 50%;
+        font-family: $raleway-Bold;
+        font-size: 100px;
+        color: rgba($color: $black, $alpha: 0.2);
+        margin-bottom: 10px;
+        line-height: 100px;
+      }
+
+      p {
+        font-size: 23px;
+        color: rgba($color: $black, $alpha: 0.2);
+      }
+    }
+  }
+}
